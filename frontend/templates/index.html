@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Downloader</title>
+  <!--<link rel="stylesheet" href="../static/mystyle.css">   use for live server-->
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='mystyle.css') }}">
+  <script src="{{ url_for('static', filename='jquery-3.6.0.min.js') }}"></script>
+</head>
+
+<body>
+  
+  <div class = "first_div">
+    <input type="text" id="input_url" name="input_url" placeholder="Please Enter URLs">
+    <button id="download_btn" value="download_btn" name="download_btn">download</button>
+  </div>
+  <script type=text/javascript>
+    var download_btn = document.getElementById("download_btn");
+    download_btn.onclick = download_btn_func;
+
+    function download_btn_func() 
+    {
+      console.log('in download btn func');
+      do_ajax();
+    }
+    function do_ajax() 
+    {
+      var input_url = document.querySelector("[name='input_url']").value;
+      var data =
+      {
+        'btn': 'download',
+        'input_url' : input_url,
+      }
+      console.log(data);
+      $.ajax
+        ({
+          type: "POST",
+          url: "/",
+          data: JSON.stringify(data, null, '\t'),
+          contentType: 'application/json;charset=UTF-8',
+          success: function (result) 
+          {
+            console.log('ajax successed');
+          },
+          error: function (result) 
+          {
+            console.log('ajax error');
+          }
+        })
+    }  
+  </script>
+</body>
+</html>
